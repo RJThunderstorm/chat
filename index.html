@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PDF Organizer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app-container">
+    <h1>My PDF Organizer</h1>
+    <div id="navigation-controls">
+      <button id="back-button" style="display: none;">Back</button>
+      <!-- Breadcrumbs will go here eventually, or this div can be styled for the back button -->
+    </div>
+    <div id="controls-area">
+      <button id="add-pdf-button">Add PDF(s)</button>
+      <button id="create-folder-button">Create Folder</button>
+    </div>
+    <div id="file-display-area">
+      <p>Loading files...</p>
+    </div>
+  </div>
+  <script defer src="renderer.js"></script>
+</body>
+</html>

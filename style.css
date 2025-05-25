@@ -1,0 +1,142 @@
+body {
+  background-color: #FFFFE0; /* pastel yellow */
+  margin: 0; /* Remove default margin to make wrapper fill viewport */
+  font-family: sans-serif;
+}
+
+#app-container {
+  width: 100vw;
+  height: 100vh;
+  border-radius: 15px;
+  overflow: hidden;
+  /* If body has a background, app-container needs one too to see the radius */
+  background-color: #FFFFE0; /* Ensure this matches body or is desired */
+  display: flex; /* Using flex to easily center content */
+  flex-direction: column;
+  align-items: center;
+  /* Adjusted justify-content to start from top for file display */
+  justify-content: flex-start; 
+  text-align: center;
+  padding-top: 20px; /* Add some padding at the top */
+}
+
+#file-display-area {
+  width: 90%;
+  height: 70vh;
+  margin-top: 20px;
+  background-color: #FFFFFF;
+  border: 1px solid #DDDDDD;
+  border-radius: 8px;
+  padding: 15px;
+  overflow-y: auto;
+  text-align: left; /* Align text to left for file list */
+}
+
+.file-item, .folder-item {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #F9F9F9;
+  border: 1px solid #EEE;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.file-item:hover, .folder-item:hover {
+  background-color: #E0E0E0;
+}
+
+span.icon {
+  margin-right: 10px;
+}
+
+.drop-target-active {
+  border: 2px dashed #007bff !important; /* Use important to ensure override */
+  background-color: #F0F8FF;
+}
+
+#add-pdf-button {
+  padding: 10px 15px;
+  background-color: #A0D2DB; /* A pleasant pastel blue/green */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  font-size: 1em;
+}
+
+#add-pdf-button:hover {
+  background-color: #88BBD6;
+}
+
+#controls-area {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+#create-folder-button {
+  padding: 10px 15px;
+  background-color: #FFB347; /* A pastel orange */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  /* margin-bottom: 15px; /* Removed, as #controls-area handles bottom margin */
+  font-size: 1em;
+  margin-left: 10px;
+}
+
+#create-folder-button:hover {
+  background-color: #FF9F30;
+}
+
+.folder-item.folder-drop-target {
+  background-color: #ADD8E6; /* Light blue */
+  border: 1px dashed #0000FF;
+}
+
+#navigation-controls {
+  width: 90%; /* Match file-display-area width */
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center; /* Vertically align items if breadcrumbs are taller */
+}
+
+#back-button {
+  padding: 8px 12px;
+  background-color: #C0C0C0; /* Silver */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-right: 10px; /* Space between back button and breadcrumbs if they are added later */
+}
+
+#back-button:hover {
+  background-color: #A9A9A9; /* Darker Silver */
+}
+
+#breadcrumbs-nav {
+  /* Styles for breadcrumbs if implemented */
+  font-size: 0.9em;
+  color: #333;
+}
+
+/* Example breadcrumb link style */
+#breadcrumbs-nav span {
+  margin-right: 5px;
+  cursor: pointer;
+}
+#breadcrumbs-nav span:hover {
+  text-decoration: underline;
+}
+#breadcrumbs-nav span.current-folder {
+  font-weight: bold;
+  color: black;
+  cursor: default;
+  text-decoration: none;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PDF Viewer</title>
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+    iframe { width: 100%; height: 100%; border: none; }
+  </style>
+</head>
+<body>
+  <iframe id="pdf-iframe"></iframe>
+  <script>
+    // Get file path from query parameter
+    const queryParams = new URLSearchParams(window.location.search);
+    const filePath = decodeURIComponent(queryParams.get('filePath'));
+    if (filePath) {
+      // Using file:// protocol to load local PDF files into iframe
+      document.getElementById('pdf-iframe').src = `file://${filePath}`;
+    } else {
+      document.body.innerHTML = '<p>Error: No PDF file path provided.</p>';
+    }
+  </script>
+</body>
+</html>
