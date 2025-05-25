@@ -140,3 +140,29 @@ span.icon {
   cursor: default;
   text-decoration: none;
 }
+
+#ollama-settings {
+  width: 90%; /* Consistent with file-display-area */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 15px;
+  background-color: #FFFACD; /* Light pastel yellow, different from body */
+  border: 1px solid #DDDDDD;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* Removed #ollama-models-list ul and #ollama-models-list li styles */
+
+#ollama-models-select {
+  /* Basic styling, can be enhanced */
+  font-size: 1em;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  /* width: 100% and padding are set inline in HTML, can be moved here if preferred */
+}
+
+#ollama-status-message {
+  margin-top: 10px;
+  font-size: 0.9em;
+}

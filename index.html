@@ -19,6 +19,13 @@
     <div id="file-display-area">
       <p>Loading files...</p>
     </div>
+    <div id="ollama-settings" style="margin-top: 20px; padding: 10px; background-color: #f0f0f0; border-radius: 8px;">
+      <h3>Available Ollama Models:</h3>
+      <select id="ollama-models-select" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+        <option value="">Loading models...</option>
+      </select>
+      <p id="ollama-status-message" style="font-style: italic; color: #555;"></p>
+    </div>
   </div>
   <script defer src="renderer.js"></script>
 </body>

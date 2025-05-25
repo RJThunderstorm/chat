@@ -307,4 +307,117 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Button click for Create Folder
+  const createFolderButton = document.getElementById('create-folder-button');
+  if (createFolderButton) {
+    createFolderButton.addEventListener('click', () => {
+      const folderName = prompt("Enter folder name:");
+      if (folderName && folderName.trim() !== "") {
+        const currentFolderItems = getCurrentViewItems();
+        const isDuplicate = currentFolderItems.some(item => item.type === 'folder' && item.name === folderName.trim());
+        if (isDuplicate) {
+          alert("A folder with this name already exists in the current view. Please choose a different name.");
+          return;
+        }
+        const newFolder = { type: 'folder', name: folderName.trim(), files: [] };
+        currentFolderItems.push(newFolder);
+        
+        const mockFileInCurrentView = currentFolderItems.find(f => f.path && f.path.startsWith('/mock/path'));
+        if (mockFileInCurrentView) {
+            currentPath[currentPath.length-1].items = currentFolderItems.filter(f => !(f.path && f.path.startsWith('/mock/path')));
+            if (!currentFolderItems.find(f => f.type === 'folder' && f.name === newFolder.name)) {
+                 currentFolderItems.push(newFolder);
+             }
+        }
+        renderFiles();
+        renderBreadcrumbs();
+      } else if (folderName !== null) {
+        alert("Folder name cannot be empty.");
+      }
+    });
+  }
+
+  let selectedOllamaModel = null;
+
+  // Fetch and Display Ollama Models
+  async function fetchAndDisplayOllamaModels() {
+    const selectElement = document.getElementById('ollama-models-select'); // Changed ID
+    const statusMessageEl = document.getElementById('ollama-status-message');
+
+    if (!selectElement || !statusMessageEl) {
+      console.error('Required Ollama UI elements not found in HTML.');
+      return;
+    }
+
+    selectElement.innerHTML = '<option value="">Loading models...</option>'; // Reset
+    selectElement.disabled = true;
+    statusMessageEl.textContent = ''; // Clear status
+
+    try {
+      const response = await fetch('http://localhost:5000/api/list_ollama_models');
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        const errorMsg = errorData?.error || `Error fetching models: ${response.status} ${response.statusText}`;
+        throw new Error(errorMsg);
+      }
+      
+      const data = await response.json();
+      selectElement.innerHTML = ''; // Clear "Loading..."
+
+      if (data.error) {
+        const option = document.createElement('option');
+        option.value = "";
+        option.textContent = "Failed to load models";
+        selectElement.appendChild(option);
+        statusMessageEl.textContent = data.error;
+      } else if (data.models && data.models.length > 0) {
+        const defaultOption = document.createElement('option');
+        defaultOption.value = "";
+        defaultOption.textContent = "-- Select a Model --";
+        selectElement.appendChild(defaultOption);
+
+        data.models.forEach(modelName => {
+          const option = document.createElement('option');
+          option.value = modelName;
+          option.textContent = modelName;
+          selectElement.appendChild(option);
+        });
+        selectElement.disabled = false;
+        statusMessageEl.textContent = 'Models loaded. Please select one.';
+        // Preserve selection if model still exists
+        if (selectedOllamaModel && data.models.includes(selectedOllamaModel)) {
+          selectElement.value = selectedOllamaModel;
+        }
+      } else {
+        const option = document.createElement('option');
+        option.value = "";
+        option.textContent = "No models available";
+        selectElement.appendChild(option);
+        statusMessageEl.textContent = 'No Ollama models found. Ensure Ollama is running and models are downloaded.';
+      }
+    } catch (error) {
+      console.error('Failed to fetch Ollama models:', error);
+      selectElement.innerHTML = '<option value="">Error loading models</option>';
+      statusMessageEl.textContent = `Frontend Error: ${error.message}. Make sure backend is running.`;
+    }
+  }
+
+  // Initial call to fetch models
+  fetchAndDisplayOllamaModels();
+
+  // Event listener for the select element
+  const ollamaSelect = document.getElementById('ollama-models-select');
+  if (ollamaSelect) {
+    ollamaSelect.addEventListener('change', (event) => {
+      selectedOllamaModel = event.target.value;
+      console.log('Selected Ollama Model:', selectedOllamaModel);
+      const statusMessageEl = document.getElementById('ollama-status-message');
+      if (selectedOllamaModel) {
+        statusMessageEl.textContent = `Selected model: ${selectedOllamaModel}`;
+      } else {
+        statusMessageEl.textContent = 'No model selected.';
+      }
+    });
+  }
 });
